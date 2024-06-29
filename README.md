@@ -1,6 +1,6 @@
 # Alpha Agent
 
-The goal of this work is to build a comprehensive end-to-end alpha agent that has the capability to iteratively generate alpha strategies, backtest them on historical datasets and perform evaluations and consequently on trade alpha signals live if they exceed expected performance threshold.
+The goal of this work is to build a comprehensive end-to-end alpha agent that has the capability to iteratively generate alpha strategies, backtest them on historical datasets, perform evaluations and consequently trade the alpha signals live if they exceed expected performance threshold.
 
 ### FIRST TASK
 
