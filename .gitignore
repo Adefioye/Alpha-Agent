@@ -2,3 +2,6 @@
 .ipynb_checkpoints/
 .virtual_documents/
 venv/
+
+# Contains secret keys
+config_api_key
