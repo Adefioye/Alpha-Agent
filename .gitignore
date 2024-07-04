@@ -3,5 +3,7 @@
 .virtual_documents/
 venv/
 
+__pycache__/
+
 # Contains secret keys
 config_api_key

@@ -4,7 +4,7 @@ import pandas as pd
 from typing import Annotated, List
 from functools import wraps
 from datetime import datetime, timezone
-from ..utils.utils import decorate_all_methods, save_output, SavePathType
+from utils import decorate_all_methods, save_output, SavePathType
 from langchain_core.tools import tool
 
 def init_reddit_client(func):

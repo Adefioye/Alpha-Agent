@@ -7,7 +7,7 @@ from typing import Annotated, List, Tuple
 from pandas import DateOffset
 from datetime import datetime, timedelta
 
-from ..data_source.yfinance_utils import YFinanceUtils
+from data_sources.yfinance_utils import YFinanceUtils
 from langchain_core.tools import tool
 
 

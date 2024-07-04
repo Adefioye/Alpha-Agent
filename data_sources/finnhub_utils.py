@@ -7,7 +7,7 @@ from typing import Annotated
 from collections import defaultdict
 from functools import wraps
 from datetime import datetime
-from ..utils.utils import decorate_all_methods, save_output, SavePathType
+from utils import decorate_all_methods, save_output, SavePathType
 from langchain_core.tools import tool
 
 
@@ -113,7 +113,9 @@ class FinnHubUtils:
         ] = None,
         save_path: SavePathType = None,
     ) -> pd.DataFrame:
-
+        """
+        Retrieve basic financials history of a given company
+        """
         if freq not in ["annual", "quarterly"]:
             return f"Invalid reporting frequency {freq}. Please specify either 'annual' or 'quarterly'."
 

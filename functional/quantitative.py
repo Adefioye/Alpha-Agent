@@ -15,11 +15,15 @@ class DeployedCapitalAnalyzer(bt.Analyzer):
 
     @tool
     def start(self):
+        """Invoked to indicate the start of operations, giving the analyzer time 
+        to setup needed things
+        """
         self.deployed_capital = []
         self.initial_cash = self.strategy.broker.get_cash()  # Initial cash in account
 
     @tool
     def notify_order(self, order):
+        """Receives order notifications before each next cycle"""
         if order.status in [order.Completed]:
             if order.isbuy():
                 self.deployed_capital.append(order.executed.price * order.executed.size)
@@ -28,6 +32,9 @@ class DeployedCapitalAnalyzer(bt.Analyzer):
 
     @tool
     def stop(self):
+        """Invoked to indicate the end of operations, giving the analyzer time 
+        to shut down needed things
+        """
         total_deployed = sum(self.deployed_capital)
         final_cash = self.strategy.broker.get_value()
         net_profit = final_cash - self.initial_cash
@@ -38,6 +45,7 @@ class DeployedCapitalAnalyzer(bt.Analyzer):
 
     @tool
     def get_analysis(self):
+        """Provides returns on deployed capital"""
         return {"return_on_deployed_capital": self.retn}
 
 

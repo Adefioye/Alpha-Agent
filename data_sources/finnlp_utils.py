@@ -14,7 +14,7 @@ from FinNLP.data_sources.social_media.stocktwits_streaming import Stocktwits_Str
 from FinNLP.data_sources.news.sina_finance_date_range import Sina_Finance_Date_Range
 from FinNLP.data_sources.news.finnhub_date_range import Finnhub_Date_Range
 
-from ..utils.utils import save_output, SavePathType
+from utils import save_output, SavePathType
 from langchain_core.tools import tool
 
 US_Proxy = {
@@ -69,6 +69,7 @@ class FinNLPUtils:
             selected_columns: Annotated[list[str], "List of column names of news to return, should be chosen from 'description', 'cn:lastPubDate', 'dateModified', 'cn:dateline', 'cn:branding', 'section', 'cn:type', 'author', 'cn:source', 'cn:subtype', 'duration', 'summary', 'expires', 'cn:sectionSubType', 'cn:contentClassification', 'pubdateunix', 'url', 'datePublished', 'cn:promoImage', 'cn:title', 'cn:keyword', 'cn:liveURL', 'brand', 'hint', 'hint_detail'. Default to ['author', 'datePublished', 'description' ,'section', 'cn:title', 'summary']"] = ["author", "datePublished", "description" ,"section", "cn:title", "summary"],
             save_path: SavePathType = None
         ) -> DataFrame:
+        """Download CNBC news"""
         return streaming_download(CNBC_Streaming, {}, "CNBC News", keyword, rounds, selected_columns, save_path)
 
     @tool
@@ -78,6 +79,7 @@ class FinNLPUtils:
             selected_columns: Annotated[list[str], "List of column names of news to return, should be chosen from 'author','channelid','creationDate','desc','id','previewImage','source','tags','title','topics','typeo','url','weight'. Default to ['author', 'creationDate', 'desc' ,'source', 'title']"] = ["author", "creationDate", "desc" ,"source", "title"],
             save_path: SavePathType = None
         ) -> DataFrame:
+        """Download yicai news"""
         return streaming_download(Yicai_Streaming, {}, "Yicai News", keyword, rounds, selected_columns, save_path)
 
     @tool
@@ -87,6 +89,7 @@ class FinNLPUtils:
             selected_columns: Annotated[list[str], "List of column names of news to return, should be chosen from 'title', 'time', 'author', 'summary'. Default to ['title', 'time', 'author', 'summary']"] = ['title', 'time', 'author', 'summary'],
             save_path: SavePathType = None
         ) -> DataFrame:
+        """Download investor place news"""
         return streaming_download(InvestorPlace_Streaming, {}, "Investor Place News", keyword, rounds, selected_columns, save_path)
 
 
@@ -121,6 +124,7 @@ class FinNLPUtils:
             ] = ['title', 'author', 'content'],
             save_path: SavePathType = None
         ) -> DataFrame:
+        """Download sina finance news"""
         return date_range_download(Sina_Finance_Date_Range, {}, "Sina Finance News", start_date, end_date, None, selected_columns, save_path)
 
     @tool
@@ -131,6 +135,7 @@ class FinNLPUtils:
             selected_columns: Annotated[list[str], "List of column names of news to return, should be chosen from 'category', 'datetime', 'headline', 'id', 'image', 'related', 'source', 'summary', 'url', 'content'. Default to ['headline', 'datetime', 'source', 'summary']"] = ['headline', 'datetime', 'source', 'summary'],
             save_path: SavePathType = None
         ) -> DataFrame:
+        """Download finnhub news"""
         return date_range_download(Finnhub_Date_Range, {"token": os.environ['FINNHUB_API_KEY']}, "Finnhub News", start_date, end_date, stock, selected_columns, save_path)
 
 
@@ -157,6 +162,7 @@ class FinNLPUtils:
             """] = ['created_at', 'description', 'title', 'text', 'target', 'source'],
             save_path: SavePathType = None
         ) -> DataFrame:
+        """Download stock information from xueqiu social media"""
         return streaming_download(Xueqiu_Streaming, {}, "Xueqiu Social Media", stock, rounds, selected_columns, save_path)
 
     @tool
@@ -172,6 +178,7 @@ class FinNLPUtils:
             """] = ['created_at', 'body'],
             save_path: SavePathType = None
         ) -> DataFrame:
+        """Download stock information from stocktwits social media"""
         return streaming_download(Stocktwits_Streaming, {}, "Stocktwits Social Media", stock, rounds, selected_columns, save_path)
 
 

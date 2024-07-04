@@ -1,9 +1,8 @@
-
 from pandas import DataFrame
 import yfinance as yf
 from functools import wraps
 from typing import Annotated, Any, Callable, Optional
-from ..utils.utils import SavePathType, decorate_all_methods
+from utils import SavePathType, decorate_all_methods
 from langchain_core.tools import tool
 
 
