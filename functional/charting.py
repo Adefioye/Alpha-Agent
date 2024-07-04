@@ -8,10 +8,12 @@ from pandas import DateOffset
 from datetime import datetime, timedelta
 
 from ..data_source.yfinance_utils import YFinanceUtils
+from langchain_core.tools import tool
 
 
 class MplFinanceUtils:
 
+    @tool
     def plot_stock_price_chart(
         ticker_symbol: Annotated[
             str, "Ticker symbol of the stock (e.g., 'AAPL' for Apple)"
@@ -73,6 +75,7 @@ class MplFinanceUtils:
 
 class ReportChartUtils:
 
+    @tool
     def get_share_performance(
         ticker_symbol: Annotated[
             str, "Ticker symbol of the stock (e.g., 'AAPL' for Apple)"
@@ -144,6 +147,7 @@ class ReportChartUtils:
         plt.close()
         return f"last year stock performance chart saved to <img {plot_path}>"
 
+    @tool
     def get_pe_eps_performance(
         ticker_symbol: Annotated[
             str, "Ticker symbol of the stock (e.g., 'AAPL' for Apple)"

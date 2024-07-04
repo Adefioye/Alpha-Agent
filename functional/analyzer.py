@@ -3,6 +3,7 @@ from textwrap import dedent
 from typing import Annotated
 from datetime import timedelta, datetime
 from ..data_source import YFinanceUtils, SECUtils, FMPUtils
+from langchain_core.tools import tool
 
 
 def combine_prompt(instruction, resource, table_str=None):
@@ -21,6 +22,7 @@ def save_to_file(data: str, file_path: str):
 
 class ReportAnalysisUtils:
 
+    @tool
     def analyze_income_stmt(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -59,6 +61,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def analyze_balance_sheet(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -88,6 +91,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def analyze_cash_flow(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -117,6 +121,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def analyze_segment_stmt(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -149,6 +154,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def income_summarization(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -183,6 +189,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def get_risk_assessment(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -207,6 +214,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def analyze_business_highlights(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -236,6 +244,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def analyze_company_description(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -276,6 +285,7 @@ class ReportAnalysisUtils:
         # save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
+    @tool
     def get_key_data(
         ticker_symbol: Annotated[str, "ticker symbol"],
         filing_date: Annotated[

@@ -21,3 +21,7 @@ setuptools>=41.4.0
 wheel>=0.33.6
 
 #TODO Add langchain packages
+langchain 
+langchain-core 
+langchain-community
+langchain-groq

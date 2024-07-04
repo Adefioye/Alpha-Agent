@@ -7,7 +7,8 @@ from typing import Annotated
 from collections import defaultdict
 from functools import wraps
 from datetime import datetime
-from ..utils import decorate_all_methods, save_output, SavePathType
+from ..utils.utils import decorate_all_methods, save_output, SavePathType
+from langchain_core.tools import tool
 
 
 def init_finnhub_client(func):
@@ -31,6 +32,7 @@ def init_finnhub_client(func):
 @decorate_all_methods(init_finnhub_client)
 class FinnHubUtils:
 
+    @tool
     def get_company_profile(symbol: Annotated[str, "ticker symbol"]) -> str:
         """
         get a company's profile information
@@ -51,6 +53,7 @@ class FinnHubUtils:
 
         return formatted_str
 
+    @tool
     def get_company_news(
         symbol: Annotated[str, "ticker symbol"],
         start_date: Annotated[
@@ -89,6 +92,7 @@ class FinnHubUtils:
 
         return output
 
+    @tool
     def get_basic_financials_history(
         symbol: Annotated[str, "ticker symbol"],
         freq: Annotated[
@@ -131,6 +135,7 @@ class FinnHubUtils:
 
         return financials_output
 
+    @tool
     def get_basic_financials(
         symbol: Annotated[str, "ticker symbol"],
         selected_columns: Annotated[

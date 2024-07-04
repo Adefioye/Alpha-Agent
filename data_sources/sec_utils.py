@@ -3,8 +3,10 @@ import requests
 from sec_api import ExtractorApi, QueryApi, RenderApi
 from functools import wraps
 from typing import Annotated
-from ..utils import decorate_all_methods, SavePathType
+from ..utils.utils import decorate_all_methods, SavePathType
 from ..data_sources import FMPUtils
+from langchain_core.tools import tool
+
 
 CACHE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
 PDF_GENERATOR_API = "https://api.sec-api.io/filing-reader"
@@ -29,6 +31,7 @@ def init_sec_api(func):
 @decorate_all_methods(init_sec_api)
 class SECUtils:
 
+    @tool
     def get_10k_section(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -93,7 +96,7 @@ class SECUtils:
 
         return section_text
     
-
+    @tool
     def get_10k_metadata(
         ticker: Annotated[str, "ticker symbol"],
         start_date: Annotated[
@@ -117,6 +120,7 @@ class SECUtils:
             return response["filings"][0]
         return None
 
+    @tool
     def download_10k_filing(
         ticker: Annotated[str, "ticker symbol"],
         start_date: Annotated[
@@ -152,6 +156,7 @@ class SECUtils:
         else:
             return f"No 2023 10-K filing found for {ticker}"
 
+    @tool
     def download_10k_pdf(
         ticker: Annotated[str, "ticker symbol"],
         start_date: Annotated[

@@ -3,7 +3,8 @@ from pandas import DataFrame
 import yfinance as yf
 from functools import wraps
 from typing import Annotated, Any, Callable, Optional
-from ..utils import SavePathType, decorate_all_methods
+from ..utils.utils import SavePathType, decorate_all_methods
+from langchain_core.tools import tool
 
 
 def init_ticker(func: Callable) -> Callable:
@@ -19,6 +20,7 @@ def init_ticker(func: Callable) -> Callable:
 @decorate_all_methods(init_ticker)
 class YFinanceUtils:
 
+    @tool
     def get_stock_data(
         symbol: Annotated[str, "ticker symbol"],
         start_date: Annotated[
@@ -36,6 +38,7 @@ class YFinanceUtils:
         # save_output(stock_data, f"Stock data for {ticker.ticker}", save_path)
         return stock_data
 
+    @tool
     def get_stock_info(
         symbol: Annotated[str, "ticker symbol"],
     ) -> dict:
@@ -44,6 +47,7 @@ class YFinanceUtils:
         stock_info = ticker.info
         return stock_info
 
+    @tool
     def get_company_info(
         symbol: Annotated[str, "ticker symbol"],
         save_path: Optional[str] = None,
@@ -64,6 +68,7 @@ class YFinanceUtils:
             print(f"Company info for {ticker.ticker} saved to {save_path}")
         return company_info_df
 
+    @tool
     def get_stock_dividends(
         symbol: Annotated[str, "ticker symbol"],
         save_path: Optional[str] = None,
@@ -76,24 +81,28 @@ class YFinanceUtils:
             print(f"Dividends for {ticker.ticker} saved to {save_path}")
         return dividends
 
+    @tool
     def get_income_stmt(symbol: Annotated[str, "ticker symbol"]) -> DataFrame:
         """Fetches and returns the latest income statement of the company as a DataFrame."""
         ticker = symbol
         income_stmt = ticker.financials
         return income_stmt
 
+    @tool
     def get_balance_sheet(symbol: Annotated[str, "ticker symbol"]) -> DataFrame:
         """Fetches and returns the latest balance sheet of the company as a DataFrame."""
         ticker = symbol
         balance_sheet = ticker.balance_sheet
         return balance_sheet
 
+    @tool
     def get_cash_flow(symbol: Annotated[str, "ticker symbol"]) -> DataFrame:
         """Fetches and returns the latest cash flow statement of the company as a DataFrame."""
         ticker = symbol
         cash_flow = ticker.cashflow
         return cash_flow
 
+    @tool
     def get_analyst_recommendations(symbol: Annotated[str, "ticker symbol"]) -> tuple:
         """Fetches the latest analyst recommendations and returns the most common recommendation and its count."""
         ticker = symbol

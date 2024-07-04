@@ -22,10 +22,12 @@ from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from ..data_source import FMPUtils, YFinanceUtils
 from .analyzer import ReportAnalysisUtils
 from typing import Annotated
+from langchain_core.tools import tool
 
 
 class ReportLabUtils:
 
+    @tool
     def build_annual_report(
         ticker_symbol: Annotated[str, "ticker symbol"],
         save_path: Annotated[str, "path to save the annual report pdf"],
@@ -329,7 +331,6 @@ class ReportLabUtils:
             #     height = width * 3 // 5
             #     content.append(Image(plot_path, width=width, height=height))
 
-            # # 第二页及之后内容，使用单栏布局
             # df = ra.get_income_stmt()
             # df = df[df.columns[:3]]
             # def convert_if_money(value):
@@ -338,7 +339,6 @@ class ReportLabUtils:
             #     else:
             #         return value
 
-            # # 应用转换函数到DataFrame的每列
             # df = df.applymap(convert_if_money)
 
             # df.columns = [col.strftime('%Y') for col in df.columns]
@@ -373,7 +373,6 @@ class ReportLabUtils:
             # # content.append(Spacer(1, 0.2*inch))
             # # content.append(Paragraph('More content in the single column.', custom_style))
 
-            # 构建PDF文档
             doc.build(content)
 
             return "Annual report generated successfully."

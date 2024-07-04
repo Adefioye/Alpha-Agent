@@ -3,10 +3,11 @@ import requests
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
-from ..utils import decorate_all_methods, get_next_weekday
+from ..utils.utils import decorate_all_methods, get_next_weekday
 
 from functools import wraps
 from typing import Annotated
+from langchain_core.tools import tool
 
 
 def init_fmp_api(func):
@@ -27,6 +28,7 @@ def init_fmp_api(func):
 @decorate_all_methods(init_fmp_api)
 class FMPUtils:
 
+    @tool
     def get_target_price(
         ticker_symbol: Annotated[str, "ticker symbol"],
         date: Annotated[str, "date of the target price, should be 'yyyy-mm-dd'"],
@@ -58,6 +60,7 @@ class FMPUtils:
 
         return price_target
 
+    @tool
     def get_sec_report(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[
@@ -89,6 +92,7 @@ class FMPUtils:
         else:
             return f"Failed to retrieve data: {response.status_code}"
 
+    @tool
     def get_historical_market_cap(
         ticker_symbol: Annotated[str, "ticker symbol"],
         date: Annotated[str, "date of the market cap, should be 'yyyy-mm-dd'"],
@@ -107,6 +111,7 @@ class FMPUtils:
         else:
             return f"Failed to retrieve data: {response.status_code}"
 
+    @tool
     def get_historical_bvps(
         ticker_symbol: Annotated[str, "ticker symbol"],
         target_date: Annotated[str, "date of the BVPS, should be 'yyyy-mm-dd'"],
@@ -134,6 +139,7 @@ class FMPUtils:
         else:
             return "No close date data found"
 
+    @tool
     def get_financial_metrics(
         ticker_symbol: Annotated[str, "ticker symbol"],
         years: Annotated[int, "number of the years to search from, default to 4"] = 4,
