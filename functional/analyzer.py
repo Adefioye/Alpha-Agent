@@ -58,7 +58,7 @@ class ReportAnalysisUtils:
         # Combine the instruction, section text, and income statement
         prompt = combine_prompt(instruction, section_text, df_string)
 
-        # save_to_file(prompt, save_path)
+        save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -88,7 +88,8 @@ class ReportAnalysisUtils:
 
         section_text = SECUtils.get_10k_section(ticker_symbol, fyear, 7)
         prompt = combine_prompt(instruction, section_text, df_string)
-        # save_to_file(prompt, save_path)
+
+        save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -118,7 +119,7 @@ class ReportAnalysisUtils:
 
         section_text = SECUtils.get_10k_section(ticker_symbol, fyear, 7)
         prompt = combine_prompt(instruction, section_text, df_string)
-        # save_to_file(prompt, save_path)
+        save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -151,7 +152,8 @@ class ReportAnalysisUtils:
         )
         section_text = SECUtils.get_10k_section(ticker_symbol, fyear, 7)
         prompt = combine_prompt(instruction, section_text, df_string)
-        # save_to_file(prompt, save_path)
+        save_to_file(prompt, save_path)
+
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -171,8 +173,12 @@ class ReportAnalysisUtils:
 
         instruction = dedent(
             f"""
-            Income statement analysis: {income_stmt_analysis},
-            Segment analysis: {segment_analysis},
+            Income statement analysis: 
+
+            {income_stmt_analysis},
+            Segment analysis: 
+            
+            {segment_analysis},
             Synthesize the findings from the in-depth income statement analysis and segment analysis into a single, coherent paragraph. 
             It should be fact-based and data-driven. First, present and assess overall revenue and profit situation, noting significant 
             trends and changes. Second, examine the performance of the various business segments, with an emphasis on their revenue and 
@@ -186,7 +192,8 @@ class ReportAnalysisUtils:
 
         section_text = SECUtils.get_10k_section(ticker_symbol, fyear, 7)
         prompt = combine_prompt(instruction, section_text, "")
-        # save_to_file(prompt, save_path)
+        save_to_file(prompt, save_path)
+
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -211,7 +218,8 @@ class ReportAnalysisUtils:
         )
         instruction = "According to the given information, summarize the top 3 key risks of the company. Less than 100 words."
         prompt = combine_prompt(instruction, section_text, "")
-        # save_to_file(prompt, save_path)
+        save_to_file(prompt, save_path)
+
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -241,7 +249,7 @@ class ReportAnalysisUtils:
             """
         )
         prompt = combine_prompt(instruction, section_text, "")
-        # save_to_file(prompt, save_path)
+        save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -282,7 +290,7 @@ class ReportAnalysisUtils:
         step_prompt = combine_prompt(instruction, section_text, "")
         instruction2 = "Summarize the analysis, less than 130 words."
         prompt = combine_prompt(instruction=instruction2, resource=step_prompt)
-        # save_to_file(prompt, save_path)
+        save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
     @tool
@@ -349,4 +357,5 @@ class ReportAnalysisUtils:
                 FMPUtils.get_historical_bvps(ticker_symbol, filing_date)
             ),
         }
+
         return result
