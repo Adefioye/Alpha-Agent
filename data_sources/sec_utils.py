@@ -31,7 +31,6 @@ def init_sec_api(func):
 @decorate_all_methods(init_sec_api)
 class SECUtils:
 
-    @tool
     def get_10k_section(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -96,7 +95,6 @@ class SECUtils:
 
         return section_text
     
-    @tool
     def get_10k_metadata(
         ticker: Annotated[str, "ticker symbol"],
         start_date: Annotated[
@@ -120,7 +118,6 @@ class SECUtils:
             return response["filings"][0]
         return None
 
-    @tool
     def download_10k_filing(
         ticker: Annotated[str, "ticker symbol"],
         start_date: Annotated[
@@ -156,7 +153,6 @@ class SECUtils:
         else:
             return f"No 2023 10-K filing found for {ticker}"
 
-    @tool
     def download_10k_pdf(
         ticker: Annotated[str, "ticker symbol"],
         start_date: Annotated[

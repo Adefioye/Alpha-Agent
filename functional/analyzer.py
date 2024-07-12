@@ -304,6 +304,9 @@ class ReportAnalysisUtils:
         return key financial data used in annual report for the given ticker symbol and filing date
         """
 
+        # This ensures only date portion is used even if datetime(2023-07-27 00:00:00) is provided
+        filing_date = filing_date.split()[0]
+
         if not isinstance(filing_date, datetime):
             filing_date = datetime.strptime(filing_date, "%Y-%m-%d")
 

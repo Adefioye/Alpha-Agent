@@ -28,6 +28,9 @@ def init_fmp_api(func):
 @decorate_all_methods(init_fmp_api)
 class FMPUtils:
 
+    def check_fmp_api_key():
+        print(fmp_api_key) 
+
     @tool
     def get_target_price(
         ticker_symbol: Annotated[str, "ticker symbol"],
