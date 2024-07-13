@@ -5,7 +5,6 @@ from typing import Annotated, List
 from functools import wraps
 from datetime import datetime, timezone
 from utils import decorate_all_methods, save_output, SavePathType
-from langchain_core.tools import tool
 
 def init_reddit_client(func):
     @wraps(func)
@@ -31,7 +30,6 @@ def init_reddit_client(func):
 @decorate_all_methods(init_reddit_client)
 class RedditUtils:
     
-    @tool
     def get_reddit_posts(
         query: Annotated[
             str, "Search query, e.g. 'AAPL OR Apple Inc OR #AAPL OR (Apple AND stock)'"

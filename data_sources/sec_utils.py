@@ -5,7 +5,6 @@ from functools import wraps
 from typing import Annotated
 from utils import decorate_all_methods, SavePathType
 from data_sources import FMPUtils
-from langchain_core.tools import tool
 
 
 CACHE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")

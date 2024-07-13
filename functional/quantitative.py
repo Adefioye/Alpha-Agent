@@ -8,12 +8,10 @@ from typing import Annotated, List, Tuple
 from matplotlib import pyplot as plt
 from pprint import pformat
 from IPython import get_ipython
-from langchain_core.tools import tool
 
 
 class DeployedCapitalAnalyzer(bt.Analyzer):
 
-    @tool
     def start(self):
         """Invoked to indicate the start of operations, giving the analyzer time 
         to setup needed things
@@ -21,7 +19,6 @@ class DeployedCapitalAnalyzer(bt.Analyzer):
         self.deployed_capital = []
         self.initial_cash = self.strategy.broker.get_cash()  # Initial cash in account
 
-    @tool
     def notify_order(self, order):
         """Receives order notifications before each next cycle"""
         if order.status in [order.Completed]:
@@ -30,7 +27,6 @@ class DeployedCapitalAnalyzer(bt.Analyzer):
             elif order.issell():
                 self.deployed_capital.append(order.executed.price * order.executed.size)
 
-    @tool
     def stop(self):
         """Invoked to indicate the end of operations, giving the analyzer time 
         to shut down needed things
@@ -43,7 +39,6 @@ class DeployedCapitalAnalyzer(bt.Analyzer):
         else:
             self.retn = 0
 
-    @tool
     def get_analysis(self):
         """Provides returns on deployed capital"""
         return {"return_on_deployed_capital": self.retn}
@@ -51,7 +46,6 @@ class DeployedCapitalAnalyzer(bt.Analyzer):
 
 class BackTraderUtils:
 
-    @tool
     def back_test(
         ticker_symbol: Annotated[
             str, "Ticker symbol of the stock (e.g., 'AAPL' for Apple)"

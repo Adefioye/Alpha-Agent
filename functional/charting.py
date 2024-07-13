@@ -8,12 +8,18 @@ from pandas import DateOffset
 from datetime import datetime, timedelta
 
 from data_sources.yfinance_utils import YFinanceUtils
-from langchain_core.tools import tool
+from pathlib import Path
+
+relative_path = Path("../financial_annual_report")
+
+# Resolve the relative path to an absolute path
+REPORT_DIRECTORY = relative_path.resolve()
+
+print("Report directory: ", REPORT_DIRECTORY)
 
 
 class MplFinanceUtils:
 
-    @tool
     def plot_stock_price_chart(
         ticker_symbol: Annotated[
             str, "Ticker symbol of the stock (e.g., 'AAPL' for Apple)"
@@ -62,7 +68,7 @@ class MplFinanceUtils:
             "ylabel_lower": "Volume",
             "mav": mav,
             "show_nontrading": show_nontrading,
-            "savefig": save_path,
+            "savefig": REPORT_DIRECTORY / save_path,
         }
         # Using dictionary comprehension to filter out None values (MplFinance does not accept None values)
         filtered_params = {k: v for k, v in params.items() if v is not None}
@@ -70,12 +76,11 @@ class MplFinanceUtils:
         # Plot chart
         mpf.plot(stock_data, **filtered_params)
 
-        return f"{type} chart saved to <img {save_path}>"
+        return f"{type} chart saved to <img {REPORT_DIRECTORY / save_path}>"
 
 
 class ReportChartUtils:
 
-    @tool
     def get_share_performance(
         ticker_symbol: Annotated[
             str, "Ticker symbol of the stock (e.g., 'AAPL' for Apple)"
@@ -84,6 +89,9 @@ class ReportChartUtils:
         save_path: Annotated[str, "File path where the plot should be saved"],
     ) -> str:
         """Plot the stock performance of a company compared to the S&P 500 over the past year."""
+
+        filing_date = filing_date.split()[0]
+
         if isinstance(filing_date, str):
             filing_date = datetime.strptime(filing_date, "%Y-%m-%d")
 
@@ -139,15 +147,14 @@ class ReportChartUtils:
         plt.tight_layout()
         # plt.show()
         plot_path = (
-            f"{save_path}/stock_performance.png"
-            if os.path.isdir(save_path)
-            else save_path
+            f"{REPORT_DIRECTORY / save_path}/stock_performance.png"
+            if os.path.isdir(REPORT_DIRECTORY / save_path)
+            else REPORT_DIRECTORY / save_path
         )
         plt.savefig(plot_path)
         plt.close()
         return f"last year stock performance chart saved to <img {plot_path}>"
 
-    @tool
     def get_pe_eps_performance(
         ticker_symbol: Annotated[
             str, "Ticker symbol of the stock (e.g., 'AAPL' for Apple)"
@@ -157,6 +164,9 @@ class ReportChartUtils:
         save_path: Annotated[str, "File path where the plot should be saved"] = None,
     ) -> str:
         """Plot the PE ratio and EPS performance of a company over the past n years."""
+
+        filing_date = filing_date.split()[0]
+
         if isinstance(filing_date, str):
             filing_date = datetime.strptime(filing_date, "%Y-%m-%d")
 
@@ -212,7 +222,7 @@ class ReportChartUtils:
         plt.tight_layout()
         # plt.show()
         plot_path = (
-            f"{save_path}/pe_performance.png" if os.path.isdir(save_path) else save_path
+            f"{REPORT_DIRECTORY / save_path}/pe_performance.png" if os.path.isdir(REPORT_DIRECTORY / save_path) else REPORT_DIRECTORY / save_path
         )
         plt.savefig(plot_path)
         plt.close()

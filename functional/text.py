@@ -1,9 +1,7 @@
 from typing import Annotated
-from langchain_core.tools import tool
 
 class TextUtils:
 
-    @tool
     def check_text_length(
         text: Annotated[str, "text to check"],
         min_length: Annotated[int, "minimum length of the text, default to 0"] = 0,
@@ -19,3 +17,5 @@ class TextUtils:
             return f"Text length {length} is less than the minimum length of {min_length}."
         else:
             return f"Text length {length} is within the expected range."
+        
+

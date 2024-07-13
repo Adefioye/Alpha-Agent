@@ -1,14 +1,12 @@
 import os
 from typing_extensions import Annotated
 from IPython import get_ipython
-from langchain_core.tools import tool
 
 default_path = "coding/"
 
 
 class IPythonUtils:
 
-    @tool
     def exec_python(cell: Annotated[str, "Valid Python cell to execute."]) -> str:
         """
         run cell in ipython and return the execution result.
@@ -22,7 +20,6 @@ class IPythonUtils:
             log += f"\n{result.error_in_exec}"
         return log
 
-    @tool
     def display_image(
         image_path: Annotated[str, "Path to image file to display."]
     ) -> str:
@@ -40,7 +37,6 @@ class IPythonUtils:
 
 class CodingUtils:  # Borrowed from https://microsoft.github.io/autogen/docs/notebooks/agentchat_function_call_code_writing
 
-    @tool
     def list_dir(directory: Annotated[str, "Directory to check."]) -> str:
         """
         List files in choosen directory.
@@ -48,7 +44,6 @@ class CodingUtils:  # Borrowed from https://microsoft.github.io/autogen/docs/not
         files = os.listdir(default_path + directory)
         return str(files)
 
-    @tool
     def see_file(filename: Annotated[str, "Name and path of file to check."]) -> str:
         """
         Check the contents of a chosen file.
@@ -60,7 +55,6 @@ class CodingUtils:  # Borrowed from https://microsoft.github.io/autogen/docs/not
 
         return file_contents
 
-    @tool
     def modify_code(
         filename: Annotated[str, "Name and path of file to change."],
         start_line: Annotated[int, "Start line number to replace with new code."],
@@ -81,7 +75,6 @@ class CodingUtils:  # Borrowed from https://microsoft.github.io/autogen/docs/not
             file.write("".join(file_contents))
         return "Code modified"
 
-    @tool
     def create_file_with_code(
         filename: Annotated[str, "Name and path of file to create."],
         code: Annotated[str, "Code to write in the file."],

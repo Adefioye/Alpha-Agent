@@ -22,12 +22,17 @@ from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from data_sources import FMPUtils, YFinanceUtils
 from functional import ReportAnalysisUtils
 from typing import Annotated
-from langchain_core.tools import tool
+from pathlib import Path
+
+
+relative_path = Path("../financial_annual_report")
+
+# Resolve the relative path to an absolute path
+REPORT_DIRECTORY = relative_path.resolve()
 
 
 class ReportLabUtils:
 
-    @tool
     def build_annual_report(
         ticker_symbol: Annotated[str, "ticker symbol"],
         save_path: Annotated[str, "path to save the annual report pdf"],
@@ -67,9 +72,9 @@ class ReportLabUtils:
 
 
             pdf_path = (
-                os.path.join(save_path, f"{ticker_symbol}_report.pdf")
-                if os.path.isdir(save_path)
-                else save_path
+                os.path.join(REPORT_DIRECTORY / save_path, f"{ticker_symbol}_report.pdf")
+                if os.path.isdir(REPORT_DIRECTORY / save_path)
+                else REPORT_DIRECTORY / save_path
             )
             os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
             doc = SimpleDocTemplate(pdf_path, pagesize=pagesizes.A4)

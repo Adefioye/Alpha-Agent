@@ -3,7 +3,6 @@ import yfinance as yf
 from functools import wraps
 from typing import Annotated, Any, Callable, Optional
 from utils import SavePathType, decorate_all_methods, save_output
-from langchain_core.tools import tool
 
 
 def init_ticker(func: Callable) -> Callable:

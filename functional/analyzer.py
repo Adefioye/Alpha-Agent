@@ -3,7 +3,15 @@ from textwrap import dedent
 from typing import Annotated
 from datetime import timedelta, datetime
 from data_sources import YFinanceUtils, SECUtils, FMPUtils
-from langchain_core.tools import tool
+from pathlib import Path
+
+
+relative_path = Path("../financial_annual_report")
+
+# Resolve the relative path to an absolute path
+REPORT_DIRECTORY = relative_path.resolve()
+
+print("Report directory: ", REPORT_DIRECTORY)
 
 
 def combine_prompt(instruction, resource, table_str=None):
@@ -15,14 +23,14 @@ def combine_prompt(instruction, resource, table_str=None):
 
 
 def save_to_file(data: str, file_path: str):
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    with open(file_path, "w") as f:
+    os.makedirs(os.path.dirname(REPORT_DIRECTORY), exist_ok=True)
+    with open(REPORT_DIRECTORY / file_path, "w") as f:
+        print(f"Writing data to {REPORT_DIRECTORY / file_path}")
         f.write(data)
 
 
 class ReportAnalysisUtils:
 
-    @tool
     def analyze_income_stmt(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -61,7 +69,6 @@ class ReportAnalysisUtils:
         save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def analyze_balance_sheet(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -92,7 +99,6 @@ class ReportAnalysisUtils:
         save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def analyze_cash_flow(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -122,7 +128,6 @@ class ReportAnalysisUtils:
         save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def analyze_segment_stmt(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -156,7 +161,6 @@ class ReportAnalysisUtils:
 
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def income_summarization(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -196,7 +200,6 @@ class ReportAnalysisUtils:
 
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def get_risk_assessment(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -222,7 +225,6 @@ class ReportAnalysisUtils:
 
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def analyze_business_highlights(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -252,7 +254,6 @@ class ReportAnalysisUtils:
         save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def analyze_company_description(
         ticker_symbol: Annotated[str, "ticker symbol"],
         fyear: Annotated[str, "fiscal year of the 10-K report"],
@@ -293,7 +294,6 @@ class ReportAnalysisUtils:
         save_to_file(prompt, save_path)
         return f"instruction & resources saved to {save_path}"
 
-    @tool
     def get_key_data(
         ticker_symbol: Annotated[str, "ticker symbol"],
         filing_date: Annotated[
@@ -362,3 +362,7 @@ class ReportAnalysisUtils:
         }
 
         return result
+
+if __name__ == "__main__":
+    # Example usage:
+    print(os.path.join(REPORT_DIRECTORY, "food.txt"))

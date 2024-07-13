@@ -15,7 +15,6 @@ from FinNLP.data_sources.news.sina_finance_date_range import Sina_Finance_Date_R
 from FinNLP.data_sources.news.finnhub_date_range import Finnhub_Date_Range
 
 from utils import save_output, SavePathType
-from langchain_core.tools import tool
 
 US_Proxy = {
     "use_proxy": "us_free",
@@ -62,7 +61,6 @@ class FinNLPUtils:
     """
     Streaming News Download
     """
-    @tool
     def cnbc_news_download(
             keyword: Annotated[str, "Keyword to search in news stream"],
             rounds: Annotated[int, "Number of rounds to search. Default to 1"] = 1,
@@ -72,7 +70,6 @@ class FinNLPUtils:
         """Download CNBC news"""
         return streaming_download(CNBC_Streaming, {}, "CNBC News", keyword, rounds, selected_columns, save_path)
 
-    @tool
     def yicai_news_download(
             keyword: Annotated[str, "Keyword to search in news stream"],
             rounds: Annotated[int, "Number of rounds to search. Default to 1"] = 1,
@@ -82,7 +79,7 @@ class FinNLPUtils:
         """Download yicai news"""
         return streaming_download(Yicai_Streaming, {}, "Yicai News", keyword, rounds, selected_columns, save_path)
 
-    @tool
+    
     def investor_place_news_download(
             keyword: Annotated[str, "Keyword to search in news stream"],
             rounds: Annotated[int, "Number of rounds to search. Default to 1"] = 1,
@@ -106,7 +103,7 @@ class FinNLPUtils:
     """
     Date Range News Download
     """
-    @tool
+    
     def sina_finance_news_download(
             start_date: Annotated[str, "Start date of the news to retrieve, YYYY-mm-dd"],
             end_date: Annotated[str, "End date of the news to retrieve, YYYY-mm-dd"],
@@ -127,7 +124,7 @@ class FinNLPUtils:
         """Download sina finance news"""
         return date_range_download(Sina_Finance_Date_Range, {}, "Sina Finance News", start_date, end_date, None, selected_columns, save_path)
 
-    @tool
+    
     def finnhub_news_download(
             start_date: Annotated[str, "Start date of the news to retrieve, YYYY-mm-dd"],
             end_date: Annotated[str, "End date of the news to retrieve, YYYY-mm-dd"],
@@ -142,7 +139,7 @@ class FinNLPUtils:
     """
     Social Media
     """
-    @tool
+    
     def xueqiu_social_media_download(
             stock: Annotated[str, "Stock symbol, e.g. 'AAPL'"],
             rounds: Annotated[int, "Number of rounds to search. Default to 1"] = 1,
@@ -165,7 +162,7 @@ class FinNLPUtils:
         """Download stock information from xueqiu social media"""
         return streaming_download(Xueqiu_Streaming, {}, "Xueqiu Social Media", stock, rounds, selected_columns, save_path)
 
-    @tool
+    
     def stocktwits_social_media_download(
             stock: Annotated[str, "Stock symbol, e.g. 'AAPL'"],
             rounds: Annotated[int, "Number of rounds to search. Default to 1"] = 1,
